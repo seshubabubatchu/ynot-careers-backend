@@ -10,4 +10,6 @@ import com.ynot.careers.model.CategoryModel;
 @Repository
 public interface CategoryRepository extends JpaRepository<CategoryModel, Long> {
     List<CategoryModel> findAllByCategoryName(String name);
+
+    CategoryModel findByCategoryName(String name);
 }
