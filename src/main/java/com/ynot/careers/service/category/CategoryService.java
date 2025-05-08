@@ -35,9 +35,9 @@ public class CategoryService implements ICategoryService {
     }
 
     @Override
-    public List<CategoryModel> getCategoriesByName(String name) {
+    public CategoryModel getCategoryByName(String name) {
         try {
-            return categoryRepository.findAllByCategoryName(name);
+            return categoryRepository.findByCategoryName(name);
         } catch (Exception e) {
             throw new Error("Cannot get with name", e);
 

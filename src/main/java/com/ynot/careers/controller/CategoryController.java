@@ -51,7 +51,7 @@ public class CategoryController {
     @GetMapping("name/{name}")
     public ResponseEntity<ApiResponse> getCategoriesByName(@PathVariable String name) {
         try {
-            List<CategoryModel> categoryByGivenName = categoryService.getCategoriesByName(name);
+            CategoryModel categoryByGivenName = categoryService.getCategoryByName(name);
             return ResponseEntity.ok(new ApiResponse("found categories with given name", categoryByGivenName));
         } catch (Exception e) {
             return ResponseEntity.status(INTERNAL_SERVER_ERROR)
@@ -62,8 +62,16 @@ public class CategoryController {
     @PostMapping("add")
     public ResponseEntity<ApiResponse> addCategory(@RequestBody CategoryModel category) {
         try {
-            CategoryModel newCategory = categoryService.addCategory(category);
-            return ResponseEntity.ok(new ApiResponse("category added", newCategory));
+
+            CategoryModel categoryExists = categoryService.getCategoryByName(category.getCategoryName());
+            if (categoryExists != null) {
+                return ResponseEntity.ok(new ApiResponse("category already exists", null));
+
+            } else {
+                CategoryModel newCategory = categoryService.addCategory(category);
+                return ResponseEntity.ok(new ApiResponse("category added", newCategory));
+            }
+
         } catch (Exception e) {
             return ResponseEntity.status(INTERNAL_SERVER_ERROR)
                     .body(new ApiResponse("error adding category", e));

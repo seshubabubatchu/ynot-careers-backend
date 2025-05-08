@@ -9,7 +9,7 @@ public interface ICategoryService {
 
     CategoryModel getCategoryById(Long id);
 
-    List<CategoryModel> getCategoriesByName(String name);
+    CategoryModel getCategoryByName(String name);
 
     CategoryModel addCategory(CategoryModel category);
 
